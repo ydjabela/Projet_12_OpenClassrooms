@@ -63,3 +63,12 @@ flake8 --format=html --htmldir=flake-report --exclude=env --max-line-length=119
 - Yacine Djabela
 - Stephane Didier
 
+
+
+cd OneDrive
+cd Documents
+cd GitHub
+Projet_12\Scripts\activate.bat
+cd Projet_12_OpenClassrooms
+cd Epicevents
+python manage.py runserver 
