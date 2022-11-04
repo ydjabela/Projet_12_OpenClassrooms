@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Event
+from .models import Event, EventStatus
 
 
 class CustomEvent(admin.ModelAdmin):
@@ -21,4 +21,14 @@ class CustomEvent(admin.ModelAdmin):
     )
 
 
+class CustomStatusEvent(admin.ModelAdmin):
+    fieldsets = [
+        ('event_status', {'fields': ['event_status']}),
+    ]
+    list_display = (
+        'event_status',
+    )
+
+
 admin.site.register(Event, CustomEvent)
+admin.site.register(EventStatus, CustomStatusEvent)

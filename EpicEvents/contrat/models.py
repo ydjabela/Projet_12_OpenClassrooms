@@ -13,5 +13,5 @@ class Contrat(models.Model):
     payment_due = models.DateTimeField(null=False, blank=False)
 
     def save(self, *args, **kwargs):
-        super(Contract, self).save(*args, **kwargs)
+        super(Contrat, self).save(*args, **kwargs)
         return self
