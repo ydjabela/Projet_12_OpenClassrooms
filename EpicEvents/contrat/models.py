@@ -1,6 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
-from authentification.models import Client
+from authentification.models import Client, User
 
 
 class Contrat(models.Model):

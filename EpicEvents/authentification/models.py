@@ -78,7 +78,7 @@ class Client(models.Model):
     company_name = models.CharField(max_length=250, null=False, blank=False)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
-    sales_contact = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=False)
+    sales_contact = models.ForeignKey(to=User, on_delete=models.SET_NULL, null=True, blank=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'username']

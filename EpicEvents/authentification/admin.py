@@ -1,6 +1,6 @@
 from django.contrib import admin
 # Locals:
-from .models import Client
+from .models import Client, User
 
 
 # Register client
@@ -31,3 +31,4 @@ class CustomClient(admin.ModelAdmin):
 
 
 admin.site.register(Client, CustomClient)
+admin.site.register(User)
