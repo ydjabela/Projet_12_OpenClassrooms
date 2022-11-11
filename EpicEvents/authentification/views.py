@@ -15,7 +15,7 @@ class ClientView(viewsets.ModelViewSet):
     serializer_class = ClientSerializer
     # permission_classes = [permissions.IsAuthenticated, IsProjectAuthor]
 
-    def list(self, request):
+    def list(self, request, *args, **kwargs):
         clients = Client.objects.all()
         if clients is not None:
             serialized_clients = ClientSerializer(clients, many=True)
@@ -26,9 +26,10 @@ class ClientView(viewsets.ModelViewSet):
                 status=status.HTTP_204_NO_CONTENT
             )
 
-    def retrieve(self, request, pk):
+    def retrieve(self, request, *args, **kwargs):
         try:
-            client = Client.objects.get(id=pk)
+            client_id = int(request.resolver_match.kwargs["pk"])
+            client = Client.objects.get(id=client_id)
         except Client.DoesNotExist:
             return response.Response(
                 data={"detail": "Client doesn't exist."},
@@ -47,20 +48,42 @@ class ClientView(viewsets.ModelViewSet):
                 status=status.HTTP_404_NOT_FOUND
             )
 
-    def create(self, request):
-        try:
-            content = dict(request.data.items())
-        except Exception:
-            return response.Response(
-                data={"detail": "Form is invalid."},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+    def create(self, request, *args, **kwargs):
+        user = request.data
+        serializer = ClientSerializer(data=user)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return response.Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    def update(self, request, pk):
+    def update(self, request, *args, **kwargs):
+        first_name = request.data["first_name"]
+        last_name = request.data["last_name"]
+        email = request.data["email"]
+        phone = request.data["phone"]
+        mobile = request.data["mobile"]
+        company_name = request.data["company_name"]
+        sales_contact = request.data["sales_contact"]
+        data = {
+            "first_name": first_name,
+            "last_name": last_name,
+            "email": email,
+            "phone": phone,
+            "mobile": mobile,
+            "company_name": company_name,
+            "sales_contact": sales_contact,
+        }
         try:
-            client_update = Client.objects.get(id=pk)
-        except Client.DoesNotExist:
-            return response.Response(
-                data={"detail": "Client doesn't exist."},
-                status=status.HTTP_404_NOT_FOUND
-            )
+            client_id = int(request.resolver_match.kwargs["pk"])
+            partial = kwargs.pop('partial', False)
+            instance = Client.objects.get(id=client_id)
+            serializer = self.get_serializer(
+                instance,
+                data=data,
+                partial=partial)
+            serializer.is_valid(raise_exception=True)
+            self.perform_update(serializer)
+            return response.Response(serializer.data)
+        except Exception:
+            content = {"detail": "Client doesn't exist."}
+            return response.Response(data=content,
+                            status=status.HTTP_404_NOT_FOUND)
