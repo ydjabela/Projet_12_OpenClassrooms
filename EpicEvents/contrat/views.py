@@ -97,7 +97,7 @@ class ContratView(viewsets.ModelViewSet):
         try:
             contrat_id = int(request.resolver_match.kwargs["pk"])
             partial = kwargs.pop('partial', False)
-            instance = Contrat.objects.get(id=contrat_id)
+            instance = Contrat.objects.get(id=contrat_id, client=client)
             serializer = self.get_serializer(
                 instance,
                 data=data,
