@@ -1,3 +1,4 @@
+# users/models.py
 from __future__ import unicode_literals
 from django.db import models
 from django.utils import timezone
@@ -10,39 +11,33 @@ from django.contrib.auth.models import (
 
 class UserManager(BaseUserManager):
 
-    use_in_migrations = True
-
     def _create_user(self, email, password, **extra_fields):
-        """Create and save a User with the given email and password."""
+        """
+        Creates and saves a User with the given email,and password.
+        """
         if not email:
             raise ValueError('The given email must be set')
-        email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
     def create_user(self, email, password=None, **extra_fields):
-        """Create and save a regular User with the given email and password."""
-        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
         return self._create_user(email, password, **extra_fields)
 
     def create_superuser(self, email, password, **extra_fields):
-        """Create and save a SuperUser with the given email and password."""
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
-
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError('Superuser must have is_staff=True.')
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError('Superuser must have is_superuser=True.')
-
-        return self._create_user(email, password, **extra_fields)
+        return self._create_user(email, password=password, **extra_fields)
 
 
-class User(AbstractBaseUser):
-
+class User(AbstractBaseUser, PermissionsMixin):
+    """
+    An abstract base class implementing a fully featured User model with
+    admin-compliant permissions.
+    """
     SALES = 'sales_member'
     MANAGEMENT = 'management_member'
     SUPPORT = 'support_member'
@@ -54,18 +49,19 @@ class User(AbstractBaseUser):
 
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, null=True, blank=True)
     phone_number = models.CharField(max_length=20, null=True, blank=True)
-
-    username = None
-    email = models.EmailField(unique=True)
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
-
+    email = models.EmailField(max_length=40, unique=True)
+    first_name = models.CharField(max_length=30, blank=True)
+    last_name = models.CharField(max_length=30, blank=True)
     is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    date_joined = models.DateTimeField(default=timezone.now)
     objects = UserManager()
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 
-    def __str__(self):
-        return f'{self.email}'
+    def save(self, *args, **kwargs):
+        super(User, self).save(*args, **kwargs)
+        return self
 
 
 class Client(models.Model):

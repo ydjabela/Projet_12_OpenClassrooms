@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework_simplejwt',
     'authentification',
     'contrat',
     'événement',
@@ -54,6 +55,17 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'EpicEvents.urls'
+
+AUTH_USER_MODEL = "authentification.User"
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ]
+}
 
 TEMPLATES = [
     {
