@@ -14,7 +14,7 @@ from .serializer import ContratSerializer
 
 class ContratView(viewsets.ModelViewSet):
     serializer_class = ContratSerializer
-    # permission_classes = [permissions.IsAuthenticated, IsProjectAuthor]
+    permission_classes = [permissions.IsAuthenticated, ]
 
     def list(self, request, *args, **kwargs):
         try:

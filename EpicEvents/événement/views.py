@@ -15,7 +15,7 @@ from .serializer import EventSerializer
 
 class EventView(viewsets.ModelViewSet):
     serializer_class = EventSerializer
-    # permission_classes = [permissions.IsAuthenticated, IsProjectAuthor]
+    permission_classes = [permissions.IsAuthenticated, ]
 
     def list(self, request, *args, **kwargs):
         try:

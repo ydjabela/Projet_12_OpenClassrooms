@@ -11,11 +11,12 @@ from rest_framework import (
 )
 from .models import Client, User
 from .serializer import ClientSerializer, UserSerializer
+from .permissions import ClientPermissions
 
 
 class ClientView(viewsets.ModelViewSet):
     serializer_class = ClientSerializer
-    # permission_classes = [permissions.IsAuthenticated, IsProjectAuthor]
+    permission_classes = [permissions.IsAuthenticated, ClientPermissions]
 
     def list(self, request, *args, **kwargs):
         clients = Client.objects.all()
