@@ -7,8 +7,8 @@ from rest_framework import (
 from .models import Event
 from authentification.models import Client
 from contrat.models import Contrat
-from Projet_12_OpenClassrooms.EpicEvents.events.serializer import EventSerializer
-from Projet_12_OpenClassrooms.EpicEvents.events.permissions import EventPermissions
+from .serializer import EventSerializer
+from .permissions import EventPermissions
 
 
 class EventView(viewsets.ModelViewSet):

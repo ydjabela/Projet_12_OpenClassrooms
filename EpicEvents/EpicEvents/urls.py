@@ -25,5 +25,5 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('client/', include("authentification.urls")),
     path('client/<int:client_id>/contrat/', include("contrat.urls")),
-    #path('client/<int:client_id>/contrat/<int:contrat_id>/event/', include("événement.urls")),
+    path('client/<int:client_id>/contrat/<int:contrat_id>/event/', include("events.urls")),
 ]
