@@ -11,7 +11,7 @@ from rest_framework import (
 )
 from .models import Client, User
 from .serializer import ClientSerializer, UserSerializer
-from .permissions import ClientPermissions
+from .permissions import ClientPermissions, UserPermissions
 
 
 class ClientView(viewsets.ModelViewSet):
@@ -94,7 +94,7 @@ class ClientView(viewsets.ModelViewSet):
 
 class CreateUserAPIView(APIView):
     # Allow any user (authenticated or not) to access this url
-    permission_classes = (AllowAny,)
+    permission_classes = (permissions.IsAuthenticated, UserPermissions)
 
     def post(self, request):
         user = request.data

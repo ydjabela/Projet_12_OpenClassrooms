@@ -20,3 +20,15 @@ class ClientPermissions(BasePermission):
         else:
             return False
 
+
+class UserPermissions(BasePermission):
+    message = "You do'nt have not acces"
+
+    def has_permission(self, request, view):
+        user_id = request.user.id
+        user = User.objects.get(id=user_id)
+        if user.role == "management_member":
+            return True
+        else:
+            return False
+
