@@ -30,5 +30,16 @@ class CustomClient(admin.ModelAdmin):
     )
 
 
+class CustomUser(admin.ModelAdmin):
+    list_display = (
+        'date_joined',
+        'first_name',
+        'last_name',
+        'email',
+        'phone_number',
+        'role'
+    )
+
+
 admin.site.register(Client, CustomClient)
-admin.site.register(User)
+admin.site.register(User, CustomUser)
