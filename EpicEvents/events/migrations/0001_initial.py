@@ -20,22 +20,45 @@ class Migration(migrations.Migration):
             name='EventStatus',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('event_status', models.CharField(choices=[('created', 'created'), ('in_progress', 'in_progress'), ('finished', 'finished')], max_length=20)),
+                ('event_status', models.CharField(
+                    choices=[('created', 'created'), ('in_progress', 'in_progress'), ('finished', 'finished')],
+                    max_length=20
+                )),
             ],
         ),
         migrations.CreateModel(
             name='Event',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(
+                    auto_created=True,
+                    primary_key=True,
+                    serialize=False,
+                    verbose_name='ID'
+                )),
                 ('date_created', models.DateTimeField(auto_now_add=True)),
                 ('date_updated', models.DateTimeField(auto_now=True)),
                 ('attendees', models.IntegerField()),
                 ('event_date', models.DateTimeField()),
                 ('notes', models.TextField()),
-                ('client', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='authentification.client')),
-                ('contrat', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='contrat.contrat')),
-                ('event_status', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='events.eventstatus')),
-                ('support_contact', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
+                ('client', models.ForeignKey(
+                    null=True,
+                    on_delete=django.db.models.deletion.SET_NULL,
+                    to='authentification.client'
+                )),
+                ('contrat', models.ForeignKey(
+                    null=True,
+                    on_delete=django.db.models.deletion.SET_NULL,
+                    to='contrat.contrat'
+                )),
+                ('event_status', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE,
+                    to='events.eventstatus'
+                )),
+                ('support_contact', models.ForeignKey(
+                    null=True,
+                    on_delete=django.db.models.deletion.SET_NULL,
+                    to=settings.AUTH_USER_MODEL
+                )),
             ],
         ),
     ]

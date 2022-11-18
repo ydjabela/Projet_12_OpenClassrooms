@@ -18,14 +18,27 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Contrat',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(
+                    auto_created=True,
+                    primary_key=True,
+                    serialize=False,
+                    verbose_name='ID'
+                )),
                 ('date_created', models.DateTimeField(auto_now_add=True)),
                 ('date_updated', models.DateTimeField(auto_now=True)),
                 ('status', models.BooleanField()),
                 ('amount', models.FloatField()),
                 ('payment_due', models.DateTimeField()),
-                ('client', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='authentification.client')),
-                ('sales_contact', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
+                ('client', models.ForeignKey(
+                    null=True,
+                    on_delete=django.db.models.deletion.SET_NULL,
+                    to='authentification.client'
+                )),
+                ('sales_contact', models.ForeignKey(
+                    null=True,
+                    on_delete=django.db.models.deletion.SET_NULL,
+                    to=settings.AUTH_USER_MODEL
+                )),
             ],
         ),
     ]
