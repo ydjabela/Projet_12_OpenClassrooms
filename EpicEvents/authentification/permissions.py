@@ -11,7 +11,7 @@ class ClientPermissions(BasePermission):
         if user.role == "sales_member":
             return True
         elif user.role == "support_member":
-            if view.action == 'create'or view.action == 'update':
+            if view.action == 'create' or view.action == 'update':
                 return False
             else:
                 return True

@@ -10,11 +10,12 @@ from rest_framework import (
 from .models import Contrat
 from authentification.models import Client
 from .serializer import ContratSerializer
+from .permissions import ContratPermissions
 
 
 class ContratView(viewsets.ModelViewSet):
     serializer_class = ContratSerializer
-    permission_classes = [permissions.IsAuthenticated, ]
+    permission_classes = [permissions.IsAuthenticated, ContratPermissions]
 
     def list(self, request, *args, **kwargs):
         try:

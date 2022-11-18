@@ -11,11 +11,12 @@ from .models import Event
 from authentification.models import Client
 from contrat.models import Contrat
 from .serializer import EventSerializer
+from .permissions import EventPermissions
 
 
 class EventView(viewsets.ModelViewSet):
     serializer_class = EventSerializer
-    permission_classes = [permissions.IsAuthenticated, ]
+    permission_classes = [permissions.IsAuthenticated, EventPermissions]
 
     def list(self, request, *args, **kwargs):
         try:
