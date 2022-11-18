@@ -1,9 +1,9 @@
 from rest_framework.permissions import BasePermission
-from authentification.models import Client, User
+from authentification.models import User
 
 
 class ContratPermissions(BasePermission):
-    message = "You do'nt have not acces"
+    message = "You do not have access"
 
     def has_permission(self, request, view):
         user_id = request.user.id

@@ -1,9 +1,6 @@
-from django.shortcuts import render
 from rest_framework import (
     viewsets,
-    generics,
     status,
-    renderers,
     response,
     permissions
 )
@@ -67,7 +64,7 @@ class ContratView(viewsets.ModelViewSet):
             )
         serializer = ContratSerializer(
             data={
-                "client": client_id,
+                "client": client.id,
                 "status": request.data["status"],
                 "amount": request.data["amount"],
                 "payment_due": request.data["payment_due"],

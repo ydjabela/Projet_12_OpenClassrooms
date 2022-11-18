@@ -15,6 +15,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='contrat',
             name='sales_contact',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='authentification.user'),
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to='authentification.user'),
         ),
     ]

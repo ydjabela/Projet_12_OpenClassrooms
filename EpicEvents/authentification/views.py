@@ -1,15 +1,11 @@
-from django.shortcuts import render
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny
 from rest_framework import (
     viewsets,
-    generics,
     status,
-    renderers,
     response,
     permissions
 )
-from .models import Client, User
+from .models import Client
 from .serializer import ClientSerializer, UserSerializer
 from .permissions import ClientPermissions, UserPermissions
 
@@ -88,8 +84,10 @@ class ClientView(viewsets.ModelViewSet):
             return response.Response(serializer.data)
         except Exception:
             content = {"detail": "Client doesn't exist."}
-            return response.Response(data=content,
-                            status=status.HTTP_404_NOT_FOUND)
+            return response.Response(
+                data=content,
+                status=status.HTTP_404_NOT_FOUND
+            )
 
 
 class CreateUserAPIView(APIView):

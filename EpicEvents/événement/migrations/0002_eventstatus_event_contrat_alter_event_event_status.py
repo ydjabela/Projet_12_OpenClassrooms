@@ -15,19 +15,39 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='EventStatus',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('event_status', models.CharField(choices=[('created', 'created'), ('in_progress', 'in_progress'), ('finished', 'finished')], max_length=20)),
+                ('id', models.BigAutoField(
+                    auto_created=True,
+                    primary_key=True,
+                    serialize=False,
+                    verbose_name='ID'
+                )),
+                ('event_status', models.CharField(
+                    choices=[
+                        ('created', 'created'),
+                        ('in_progress', 'in_progress'),
+                        ('finished', 'finished')
+                    ],
+                    max_length=20
+                )),
             ],
         ),
         migrations.AddField(
             model_name='event',
             name='contrat',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='contrat.contrat'),
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to='contrat.contrat'
+            ),
         ),
         migrations.AlterField(
             model_name='event',
             name='event_status',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='événement.eventstatus'),
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.CASCADE,
+                to='événement.eventstatus'
+            ),
             preserve_default=False,
         ),
     ]

@@ -1,9 +1,6 @@
-from django.shortcuts import render
 from rest_framework import (
     viewsets,
-    generics,
     status,
-    renderers,
     response,
     permissions
 )
@@ -92,8 +89,8 @@ class EventView(viewsets.ModelViewSet):
             )
         serializer = EventSerializer(
             data={
-                "client": client_id,
-                "contrat": contrat_id,
+                "client": client.id,
+                "contrat": contrat.id,
                 "attendees": request.data["attendees"],
                 "event_date": request.data["event_date"],
                 "event_status": request.data["event_status"],

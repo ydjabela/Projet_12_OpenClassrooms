@@ -25,9 +25,21 @@ class Migration(migrations.Migration):
                 ('attendees', models.IntegerField()),
                 ('event_date', models.DateTimeField()),
                 ('notes', models.TextField()),
-                ('client', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='authentification.client')),
-                ('event_status', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='contrat.contrat')),
-                ('support_contact', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
+                ('client', models.ForeignKey(
+                    null=True,
+                    on_delete=django.db.models.deletion.SET_NULL,
+                    to='authentification.client'
+                )),
+                ('event_status', models.ForeignKey(
+                    null=True,
+                    on_delete=django.db.models.deletion.SET_NULL,
+                    to='contrat.contrat'
+                )),
+                ('support_contact', models.ForeignKey(
+                    null=True,
+                    on_delete=django.db.models.deletion.SET_NULL,
+                    to=settings.AUTH_USER_MODEL
+                )),
             ],
         ),
     ]

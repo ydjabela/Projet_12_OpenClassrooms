@@ -1,9 +1,9 @@
 from rest_framework.permissions import BasePermission
-from authentification.models import Client, User
+from authentification.models import User
 
 
 class ClientPermissions(BasePermission):
-    message = "You do'nt have not acces"
+    message = "You do not have access"
 
     def has_permission(self, request, view):
         user_id = request.user.id
@@ -22,7 +22,7 @@ class ClientPermissions(BasePermission):
 
 
 class UserPermissions(BasePermission):
-    message = "You do'nt have not acces"
+    message = "You do not have access"
 
     def has_permission(self, request, view):
         user_id = request.user.id
@@ -31,4 +31,3 @@ class UserPermissions(BasePermission):
             return True
         else:
             return False
-
