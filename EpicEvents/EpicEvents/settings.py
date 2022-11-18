@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'authentification',
     'contrat',
-    'événement',
+    #'événement',
 ]
 
 MIDDLEWARE = [
