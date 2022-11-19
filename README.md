@@ -49,7 +49,7 @@ python manage.py runserver
 ### Postman documentation
 
 Suivre les  indications detaillé dans le site suivant:
-https://documenter.getpostman.com/view/21236516/VUxNQ7dj
+https://documenter.getpostman.com/view/21036516/2s8YmRQ2nC
 #### Cette commande sera obligatoire à chaque fois que vous voudrez travailler avec le cours. Dans le même terminal, tapez maintenant
 ```
 pip install -r requirements.txt
@@ -62,13 +62,3 @@ flake8 --format=html --htmldir=flake-report --exclude=env --max-line-length=119
 ### Contributeurs
 - Yacine Djabela
 - Stephane Didier
-
-
-
-cd OneDrive
-cd Documents
-cd GitHub
-Projet_12\Scripts\activate.bat
-cd Projet_12_OpenClassrooms
-cd Epicevents
-python manage.py runserver 
