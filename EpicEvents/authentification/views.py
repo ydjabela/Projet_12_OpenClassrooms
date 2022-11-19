@@ -1,3 +1,4 @@
+import logging
 from rest_framework.views import APIView
 from rest_framework import (
     viewsets,
@@ -8,6 +9,8 @@ from rest_framework import (
 from .models import Client
 from .serializer import ClientSerializer, UserSerializer
 from .permissions import ClientPermissions, UserPermissions
+
+logger = logging.getLogger(__name__)
 
 
 class ClientView(viewsets.ModelViewSet):
@@ -20,6 +23,7 @@ class ClientView(viewsets.ModelViewSet):
             serialized_clients = ClientSerializer(clients, many=True)
             return response.Response(data=serialized_clients.data, status=status.HTTP_200_OK)
         else:
+            logger.error("No client available.")
             return response.Response(
                 data={"detail": "No client available."},
                 status=status.HTTP_204_NO_CONTENT
@@ -30,6 +34,7 @@ class ClientView(viewsets.ModelViewSet):
             client_id = int(request.resolver_match.kwargs["pk"])
             client = Client.objects.get(id=client_id)
         except Client.DoesNotExist:
+            logger.error("Client doesn't exist.")
             return response.Response(
                 data={"detail": "Client doesn't exist."},
                 status=status.HTTP_404_NOT_FOUND
@@ -42,6 +47,7 @@ class ClientView(viewsets.ModelViewSet):
                 status=status.HTTP_200_OK
             )
         else:
+            logger.error("Client details not available.")
             return response.Response(
                 data={"detail": "Client details not available."},
                 status=status.HTTP_404_NOT_FOUND
@@ -83,6 +89,7 @@ class ClientView(viewsets.ModelViewSet):
             self.perform_update(serializer)
             return response.Response(serializer.data)
         except Exception:
+            logger.error("Client doesn't exist.")
             content = {"detail": "Client doesn't exist."}
             return response.Response(
                 data=content,

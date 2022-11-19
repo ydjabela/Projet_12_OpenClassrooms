@@ -1,5 +1,7 @@
 from rest_framework.permissions import BasePermission
 from authentification.models import User
+import logging
+logger = logging.getLogger(__name__)
 
 
 class ClientPermissions(BasePermission):
@@ -12,12 +14,14 @@ class ClientPermissions(BasePermission):
             return True
         elif user.role == "support_member":
             if view.action == 'create' or view.action == 'update':
+                logger.error("You do not have access")
                 return False
             else:
                 return True
         elif user.role == "management_member":
             return True
         else:
+            logger.error("You do not have access")
             return False
 
 
@@ -30,4 +34,5 @@ class UserPermissions(BasePermission):
         if user.role == "management_member":
             return True
         else:
+            logger.error("You do not have access")
             return False

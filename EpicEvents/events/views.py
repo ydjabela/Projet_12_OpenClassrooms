@@ -9,6 +9,8 @@ from authentification.models import Client
 from contrat.models import Contrat
 from .serializer import EventSerializer
 from .permissions import EventPermissions
+import logging
+logger = logging.getLogger(__name__)
 
 
 class EventView(viewsets.ModelViewSet):
@@ -20,6 +22,7 @@ class EventView(viewsets.ModelViewSet):
             client_id = kwargs["client_id"]
             client = Client.objects.get(id=client_id)
         except Client.DoesNotExist:
+            logger.error("Client doesn't exist.")
             return response.Response(
                 data={"detail": "Client doesn't exist."},
                 status=status.HTTP_404_NOT_FOUND
@@ -28,6 +31,7 @@ class EventView(viewsets.ModelViewSet):
             contrat_id = kwargs["contrat_id"]
             contrat = Contrat.objects.get(id=contrat_id)
         except Contrat.DoesNotExist:
+            logger.error("Contrat doesn't exist.")
             return response.Response(
                 data={"detail": "Contrat doesn't exist."},
                 status=status.HTTP_404_NOT_FOUND
@@ -37,6 +41,7 @@ class EventView(viewsets.ModelViewSet):
             serialized_event = EventSerializer(event, many=True)
             return response.Response(data=serialized_event.data, status=status.HTTP_200_OK)
         else:
+            logger.error("No events available")
             return response.Response(
                 data={"detail": "No event available."},
                 status=status.HTTP_204_NO_CONTENT
@@ -47,6 +52,7 @@ class EventView(viewsets.ModelViewSet):
             client_id = kwargs["client_id"]
             client = Client.objects.get(id=client_id)
         except Client.DoesNotExist:
+            logger.error("Client doesn't exist.")
             return response.Response(
                 data={"detail": "Client doesn't exist."},
                 status=status.HTTP_404_NOT_FOUND
@@ -55,6 +61,7 @@ class EventView(viewsets.ModelViewSet):
             contrat_id = kwargs["contrat_id"]
             contrat = Contrat.objects.get(id=contrat_id)
         except Contrat.DoesNotExist:
+            logger.error("Contract doesn't exist.")
             return response.Response(
                 data={"detail": "Contrat doesn't exist."},
                 status=status.HTTP_404_NOT_FOUND
@@ -65,6 +72,7 @@ class EventView(viewsets.ModelViewSet):
             serialized_event = EventSerializer(event, many=True)
             return response.Response(data=serialized_event.data, status=status.HTTP_200_OK)
         else:
+            logger.error("No event available.")
             return response.Response(
                 data={"detail": "No event available."},
                 status=status.HTTP_204_NO_CONTENT
@@ -75,6 +83,7 @@ class EventView(viewsets.ModelViewSet):
             client_id = kwargs["client_id"]
             client = Client.objects.get(id=client_id)
         except Client.DoesNotExist:
+            logger.error("Client doesn't exist.")
             return response.Response(
                 data={"detail": "Client doesn't exist."},
                 status=status.HTTP_404_NOT_FOUND
@@ -83,6 +92,7 @@ class EventView(viewsets.ModelViewSet):
             contrat_id = kwargs["contrat_id"]
             contrat = Contrat.objects.get(id=contrat_id)
         except Contrat.DoesNotExist:
+            logger.error("Contract doesn't exist.")
             return response.Response(
                 data={"detail": "Contrat doesn't exist."},
                 status=status.HTTP_404_NOT_FOUND
@@ -107,6 +117,7 @@ class EventView(viewsets.ModelViewSet):
             client_id = kwargs["client_id"]
             client = Client.objects.get(id=client_id)
         except Client.DoesNotExist:
+            logger.error("Client doesn't exist.")
             return response.Response(
                 data={"detail": "Client doesn't exist."},
                 status=status.HTTP_404_NOT_FOUND
@@ -115,6 +126,7 @@ class EventView(viewsets.ModelViewSet):
             contrat_id = kwargs["contrat_id"]
             contrat = Contrat.objects.get(id=contrat_id)
         except Contrat.DoesNotExist:
+            logger.error("Contract doesn't exist.")
             return response.Response(
                 data={"detail": "Contrat doesn't exist."},
                 status=status.HTTP_404_NOT_FOUND
@@ -142,6 +154,7 @@ class EventView(viewsets.ModelViewSet):
             self.perform_update(serializer)
             return response.Response(serializer.data)
         except Exception:
+            logger.error("Event doesn't exist.")
             content = {"detail": "Event doesn't exist."}
             return response.Response(
                 data=content,
