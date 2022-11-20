@@ -24,6 +24,6 @@ urlpatterns = [
     path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('client/', include("authentification.urls")),
-    path('client/<int:client_id>/contrat/', include("contrat.urls")),
-    path('client/<int:client_id>/contrat/<int:contrat_id>/event/', include("events.urls")),
+    path('client/<client_id>/contrat/', include("contrat.urls")),
+    path('client/<client_id>/contrat/<contrat_id>/event/', include("events.urls")),
 ]

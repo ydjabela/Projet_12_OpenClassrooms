@@ -20,7 +20,7 @@ class ContratView(viewsets.ModelViewSet):
         try:
             client_id = kwargs["client_id"]
             client = Client.objects.get(id=client_id)
-        except Client.DoesNotExist:
+        except (Client.DoesNotExist, ValueError):
             logger.error("Client doesn't exist.")
             return response.Response(
                 data={"detail": "Client doesn't exist."},
@@ -41,14 +41,21 @@ class ContratView(viewsets.ModelViewSet):
         try:
             client_id = kwargs["client_id"]
             client = Client.objects.get(id=client_id)
-        except Client.DoesNotExist:
+        except (Client.DoesNotExist, ValueError):
             logger.error("Client doesn't exist.")
             return response.Response(
                 data={"detail": "Client doesn't exist."},
                 status=status.HTTP_404_NOT_FOUND
             )
-        contrat_id = int(request.resolver_match.kwargs["pk"])
-        contrat = Contrat.objects.filter(id=contrat_id, client=client)
+        try:
+            contrat_id = int(request.resolver_match.kwargs["pk"])
+            contrat = Contrat.objects.filter(id=contrat_id, client=client)
+        except (Contrat.DoesNotExist, ValueError):
+            logger.error("Contrat doesn't exist.")
+            return response.Response(
+                data={"detail": "Contrat doesn't exist."},
+                status=status.HTTP_404_NOT_FOUND
+            )
         if contrat is not None:
             serialized_contrat = ContratSerializer(contrat, many=True)
             return response.Response(data=serialized_contrat.data, status=status.HTTP_200_OK)
@@ -63,7 +70,7 @@ class ContratView(viewsets.ModelViewSet):
         try:
             client_id = kwargs["client_id"]
             client = Client.objects.get(id=client_id)
-        except Client.DoesNotExist:
+        except (Client.DoesNotExist, ValueError):
             logger.error("Client doesn't exist.")
             return response.Response(
                 data={"detail": "Client doesn't exist."},
@@ -86,10 +93,19 @@ class ContratView(viewsets.ModelViewSet):
         try:
             client_id = kwargs["client_id"]
             client = Client.objects.get(id=client_id)
-        except Client.DoesNotExist:
+        except (Client.DoesNotExist, ValueError):
             logger.error("Client doesn't exist.")
             return response.Response(
                 data={"detail": "Client doesn't exist."},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        try:
+            sales_contact = int(request.data["sales_contact"])
+        except ValueError:
+            logger.error("Sales contact doesn't exist.")
+            content = {"detail": "Sales contact doesn't exist."}
+            return response.Response(
+                data=content,
                 status=status.HTTP_404_NOT_FOUND
             )
 
@@ -98,7 +114,7 @@ class ContratView(viewsets.ModelViewSet):
             "status": request.data["status"],
             "amount": request.data["amount"],
             "payment_due": request.data["payment_due"],
-            "sales_contact": request.data["sales_contact"],  # TODO automatique user
+            "sales_contact": sales_contact,
         }
         try:
             contrat_id = int(request.resolver_match.kwargs["pk"])
@@ -111,7 +127,7 @@ class ContratView(viewsets.ModelViewSet):
             serializer.is_valid(raise_exception=True)
             self.perform_update(serializer)
             return response.Response(serializer.data)
-        except Exception:
+        except (Exception, ValueError):
             logger.error("contrat doesn't exist.")
             content = {"detail": "contrat doesn't exist."}
             return response.Response(
