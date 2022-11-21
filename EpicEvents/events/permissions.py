@@ -1,7 +1,7 @@
 from rest_framework.permissions import BasePermission
 from authentification.models import User
 import logging
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("EpicEvents")
 
 
 class EventPermissions(BasePermission):
@@ -14,12 +14,12 @@ class EventPermissions(BasePermission):
             return True
         elif user.role == "support_member":
             if view.action == 'create':
-                logger.error("You do not have access")
+                logger.warning("You do not have access")
                 return False
             else:
                 return True
         elif user.role == "management_member":
             return True
         else:
-            logger.error("You do not have access")
+            logger.warning("You do not have access")
             return False

@@ -9,7 +9,7 @@ from authentification.models import Client
 from .serializer import ContratSerializer
 from .permissions import ContratPermissions
 import logging
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("EpicEvents")
 
 
 class ContratView(viewsets.ModelViewSet):
@@ -21,7 +21,7 @@ class ContratView(viewsets.ModelViewSet):
             client_id = kwargs["client_id"]
             client = Client.objects.get(id=client_id)
         except (Client.DoesNotExist, ValueError):
-            logger.error("Client doesn't exist.")
+            logger.warning("Client doesn't exist.")
             return response.Response(
                 data={"detail": "Client doesn't exist."},
                 status=status.HTTP_404_NOT_FOUND
@@ -31,7 +31,7 @@ class ContratView(viewsets.ModelViewSet):
             serialized_contrat = ContratSerializer(contrat, many=True)
             return response.Response(data=serialized_contrat.data, status=status.HTTP_200_OK)
         else:
-            logger.error("No contrat available.")
+            logger.warning("No contrat available.")
             return response.Response(
                 data={"detail": "No contrat available."},
                 status=status.HTTP_204_NO_CONTENT
@@ -42,7 +42,7 @@ class ContratView(viewsets.ModelViewSet):
             client_id = kwargs["client_id"]
             client = Client.objects.get(id=client_id)
         except (Client.DoesNotExist, ValueError):
-            logger.error("Client doesn't exist.")
+            logger.warning("Client doesn't exist.")
             return response.Response(
                 data={"detail": "Client doesn't exist."},
                 status=status.HTTP_404_NOT_FOUND
@@ -51,7 +51,7 @@ class ContratView(viewsets.ModelViewSet):
             contrat_id = int(request.resolver_match.kwargs["pk"])
             contrat = Contrat.objects.filter(id=contrat_id, client=client)
         except (Contrat.DoesNotExist, ValueError):
-            logger.error("Contrat doesn't exist.")
+            logger.warning("Contrat doesn't exist.")
             return response.Response(
                 data={"detail": "Contrat doesn't exist."},
                 status=status.HTTP_404_NOT_FOUND
@@ -60,7 +60,7 @@ class ContratView(viewsets.ModelViewSet):
             serialized_contrat = ContratSerializer(contrat, many=True)
             return response.Response(data=serialized_contrat.data, status=status.HTTP_200_OK)
         else:
-            logger.error("No contrat available.")
+            logger.warning("No contrat available.")
             return response.Response(
                 data={"detail": "No contrat available."},
                 status=status.HTTP_204_NO_CONTENT
@@ -71,7 +71,7 @@ class ContratView(viewsets.ModelViewSet):
             client_id = kwargs["client_id"]
             client = Client.objects.get(id=client_id)
         except (Client.DoesNotExist, ValueError):
-            logger.error("Client doesn't exist.")
+            logger.warning("Client doesn't exist.")
             return response.Response(
                 data={"detail": "Client doesn't exist."},
                 status=status.HTTP_404_NOT_FOUND
@@ -94,7 +94,7 @@ class ContratView(viewsets.ModelViewSet):
             client_id = kwargs["client_id"]
             client = Client.objects.get(id=client_id)
         except (Client.DoesNotExist, ValueError):
-            logger.error("Client doesn't exist.")
+            logger.warning("Client doesn't exist.")
             return response.Response(
                 data={"detail": "Client doesn't exist."},
                 status=status.HTTP_404_NOT_FOUND
@@ -102,7 +102,7 @@ class ContratView(viewsets.ModelViewSet):
         try:
             sales_contact = int(request.data["sales_contact"])
         except ValueError:
-            logger.error("Sales contact doesn't exist.")
+            logger.warning("Sales contact doesn't exist.")
             content = {"detail": "Sales contact doesn't exist."}
             return response.Response(
                 data=content,
@@ -128,7 +128,7 @@ class ContratView(viewsets.ModelViewSet):
             self.perform_update(serializer)
             return response.Response(serializer.data)
         except (Exception, ValueError):
-            logger.error("contrat doesn't exist.")
+            logger.warning("contrat doesn't exist.")
             content = {"detail": "contrat doesn't exist."}
             return response.Response(
                 data=content,
