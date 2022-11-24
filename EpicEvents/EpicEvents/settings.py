@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-
+import logging
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +25,6 @@ SECRET_KEY = 'django-insecure-jh@!#8#45kb(%=1*lfbz!pz$c(s6(^v3u-gpb^%)(#c2-9xe3&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-import logging
 logging.captureWarnings(True)
 
 LOGGING = {
